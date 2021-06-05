@@ -1,4 +1,4 @@
-#Agenda
+# Agenda
 1. [What is CodeQL](#Top1)
 2. [Differentiation to Sonarcloud/Sonarqube](#Top2)
 3. [Integrated usage in Github](#Top3)
@@ -10,7 +10,7 @@
 > A ___semantic code analysis engine___, which lets you query code as though it were data.
 - Available for C, C++, C#, Go, Java, JavaScript and Python
 - It is based on SemmleCode, which is an object-oriented query language for deductive databases developed by Semmle.
-- Semmle Inc itself is a code-analysis platform provider, that was acquired by GitHub (i.e. Microsoft) on 18 September 2019
+- Semmle Inc itself is a code-analysis platform provider, that was acquired by GitHub (i.e., Microsoft) on 18 September 2019
 
 ### How does it work
 - It creates a ___relational representations___ of your source code (i.e., database).
@@ -30,7 +30,31 @@
 - perfect integration in VS-Code and Github
 
 # <a id="Top3"></a>Integrated Usage in Github
+1. add new Github Action via security tab
+   ![Adding gh action](docs/_github/security_overview.png)
+2. select 'CodeQL Analysis'
+   ![CodeQL Analysis](docs/_github/scanning_alerts.png)
+3. adjust and commit new [action](.github/workflows/codeql-analysis.yml)
+4. verify action is running
+   ![action](docs/_github/running_initial.png)
+5. Review results
+   ![results](docs/_github/results.png)
+   ![gh_integrated_results](docs/_github/gh_integrated_results.png)
+   
 
+## Demo adding issue to show how its notified
+- change App.java to
+  ```
+  final String x = new String("Hello World!");
+  System.out.println(x);
+  ```
+- ensure query is executed by adjusting config to use suite __security-and-quality__ 
+  is currently executing 166 checks (instead of default 31 security relevant checks)
+  
+- action is succeeding although issues were identified
+  ![action with issues](docs/_github/issue_found_by_action.png)
+  ![issues overview](docs/_github/issues_overview.png)
+  ![issues detail](docs/_github/issues_detail.png)
 
 
 # <a id="Top4"></a>How to use in own CI (e.g. Jenkins)
