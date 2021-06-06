@@ -3,7 +3,7 @@
 2. [Differentiation to Sonarcloud/Sonarqube](#Top2)
 3. [Integrated usage in Github](#Top3)
 4. [How to use in different CI-evn (e.g. Jenkins)](#Top4)
-
+5. [Conclusion](#Top5)
 
 
 # <a id="Top1"></a> What is [CodeQL][CodeQL]
@@ -104,7 +104,7 @@ ___
 - Approach works from technical perspective
 - There are some tradeoffs compared to usage in Github, mainly the user experience
   - Performance (i.e., execution time)
-    - Can be optimized by using preconfigured container
+    - Can be optimized by using preconfigured container using precompiled queries
     - Reduce execution by time focusing on steps 3. to 5.
       
   - Identification of issues
@@ -113,6 +113,16 @@ ___
     - A [codeql2sonar-maven-plugin][codeql2sonar-maven-plugin] has been developed to convert the codeQL generated SARIF file to that generic format   
     - Thus the results can be integrated in Sonarqube/Sonarcloud and displayed the common used way
 
+
+
+# <a id="Top5"></a>5. Conclusion
+- CodeQL is a powerful mechanism to improve code quality
+  - driven by Microsoft/Github
+  - large community participation ([compare pulse](https://github.com/github/codeql/pulse/monthly))
+- It is not a replacement for static code analysis but a complement to it
+- Support of most important technology stack  
+- Enables to conduct scans for own queries
+  - Although it is a steep learning curve getting known to the query language itself
 
 
 [CodeQL]: https://securitylab.github.com/tools/codeql/
