@@ -9,8 +9,8 @@
 # <a id="Top1"></a> What is [CodeQL][CodeQL]
 > A ___semantic code analysis engine___, which lets you query code as though it were data.
 - Available for C, C++, C#, Go, Java, JavaScript and Python
-- It is based on SemmleCode, which is an object-oriented query language for deductive databases developed by Semmle.
-- Semmle Inc itself is a code-analysis platform provider, that was acquired by GitHub (i.e., Microsoft) on 18 September 2019
+- It is based on [SemmleCode](https://semmle.com/), which is an object-oriented query language for deductive databases developed by Semmle.
+- Semmle Inc itself is a code-analysis platform provider, that was acquired by Github (i.e., Microsoft) on 18 September 2019
 
 ### How does it work
 - It creates a ___relational representations___ of your source code (i.e., database).
@@ -26,8 +26,8 @@
 # <a id="Top2"></a> Differentiation to Sonarcloud/Sonarqube
 - static vs. semantic analysis
 - possibility to write and execute own queries
+- seamless integration in Github but also in VS-Code and  
 - executable on developer machine using [CLI][CodeQL CLI binaries] (Linux, Windows and OSX)
-- perfect integration in VS-Code and Github
 
 # <a id="Top3"></a>Integrated Usage in Github
 1. add new Github Action via security tab
@@ -51,14 +51,67 @@
 - ensure query is executed by adjusting config to use suite __security-and-quality__ 
   is currently executing 166 checks (instead of default 31 security relevant checks)
   
+  - specify additional config file
+    ```
+    - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: ${{ matrix.language }}
+          config-file: ./.github/codeql-config.yml
+    ```
+  - containing the proper suite to be considered for code analysis
+    ```
+    name: "My custom config"
+    queries:
+      - uses: security-and-quality
+    ```
+  
 - action is succeeding although issues were identified
-  ![action with issues](docs/_github/issue_found_by_action.png)
-  ![issues overview](docs/_github/issues_overview.png)
-  ![issues detail](docs/_github/issues_detail.png)
+
+![action with issues](docs/_github/issue_found_by_action.png)
+___
+![issues overview](docs/_github/issues_overview.png)
+___
+![issues detail](docs/_github/issues_detail.png)
 
 
-# <a id="Top4"></a>How to use in own CI (e.g. Jenkins)
 
+# <a id="Top4"></a>How to use in own CI (e.g. Jenkins@Baloise)
+1. Using CLI in jenkins pipeline
+   
+    1.1. ```sh "wget https://github.com/github/codeql-cli-binaries/releases/download/v2.5.5/codeql-linux64.zip"```
+   
+    1.2. ```sh "unzip -n -u codeql-cli-binaries-2.5.2-linux64.zip"```
+
+2. Get queries by cloning CodeQL repo
+  
+    ```sh "git clone https://github.com/github/codeql.git codeql-repo"```
+
+3. Get repo to be analyzed
+  
+    ```git clone https://github.com/baloise-incubator/codeql2sonar-maven-plugin.git project2scan```
+  
+4. Create database to be scanned
+    
+    ```sh "./codeql-cli/codeql database create ./project2scan/codeql_database --language=java --source-root=./project2scan/ --command='mvn clean package -f pom.xml -B -V -e -Dfindbugs.skip -Dcheckstyle.skip -Dpmd.skip=true -Denforcer.skip -Dmaven.javadoc.skip -DskipTests -Dmaven.test.skip.exec -Dlicense.skip=true -Drat.skip=true'"```
+
+5. Conduct analysis
+
+    ```sh './codeql-cli/codeql database analyze ./project2scan/codeql_database --format=sarif-latest --output=./project2scan/java-analysis.sarif  --no-sarif-add-snippets ./codeql-repo/java/ql/src/codeql-suites/java-security-and-quality.qls --no-metadata-verification'```
+
+#### Demo: [Example pipeline setup for MF-Admin](https://ci.balgroupit.com/view/MF/job/motorfahrzeug/job/mfadminServer/job/CodeQL/configure)
+
+- Approach works from technical perspective
+- There are some tradeoffs compared to usage in Github, mainly the user experience
+  - Performance (i.e., execution time)
+    - Can be optimized by using preconfigured container
+    - Reduce execution by time focusing on steps 3. to 5.
+      
+  - Identification of issues
+    - while perfectly displayed in Github the developer has to read large json files
+    - Sonarqube/Sonarcloud provides an ["Generic Issue Import"](https://docs.sonarqube.org/latest/analysis/generic-issue/)
+    - A [codeql2sonar-maven-plugin][codeql2sonar-maven-plugin] has been developed to convert the codeQL generated SARIF file to that generic format   
+    - Thus the results can be integrated in Sonarqube/Sonarcloud and displayed the common used way
 
 
 
@@ -71,3 +124,4 @@
 [Find the thief]: https://codeql.github.com/docs/writing-codeql-queries/find-the-thief/
 [SARIF]: http://docs.oasis-open.org/sarif/sarif/v2.0/csprd01/sarif-v2.0-csprd01.html
 [SARIF Azure]: https://sarifweb.azurewebsites.net/
+[codeql2sonar-maven-plugin]: https://github.com/baloise-incubator/codeql2sonar-maven-plugin
