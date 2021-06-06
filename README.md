@@ -8,6 +8,8 @@
 
 # <a id="Top1"></a> What is [CodeQL][CodeQL]
 > A ___semantic code analysis engine___, which lets you query code as though it were data.
+>> CodeQL helps you explore code quickly to find and eradicate all variants of vulnerabilities before they become a problem.
+>> By automating variant analysis, CodeQL enables product security teams to find zero-days and variants of critical vulnerabilities
 - Available for C, C++, C#, Go, Java, JavaScript and Python
 - It is based on [SemmleCode](https://semmle.com/), which is an object-oriented query language for deductive databases developed by Semmle.
 - Semmle Inc itself is a code-analysis platform provider, that was acquired by Github (i.e., Microsoft) on 18 September 2019
@@ -120,6 +122,7 @@ ___
   - driven by Microsoft/Github
   - large community participation ([compare pulse](https://github.com/github/codeql/pulse/monthly))
 - It is not a replacement for static code analysis but a complement to it
+  - Important to know: some files are not (yet) scanned (e.g. lomboked classes)
 - Support of most important technology stack  
 - Enables to conduct scans for own queries
   - Although it is a steep learning curve getting known to the query language itself
