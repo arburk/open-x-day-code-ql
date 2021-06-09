@@ -1,9 +1,19 @@
 # Agenda
+1. [Motivation](#Motivation)
 1. [What is CodeQL](#Top1)
 2. [Differentiation to Sonarcloud/Sonarqube](#Top2)
 3. [Integrated usage in Github](#Top3)
 4. [How to use in different CI-evn (e.g. Jenkins)](#Top4)
 5. [Conclusion](#Top5)
+
+
+
+# <a id="Motivation"></a> Motivation
+- Github [announced](https://github.blog/2020-09-30-code-scanning-is-now-available/) availability of "new" code scanning feature end of Q3/2020
+  > GitHub code scanning is a developer-first, GitHub-native approach to easily find security vulnerabilities before they reach production. We’re thrilled to announce the general availability of code scanning. You can enable it on your public repository today!
+- Curious about this feature (capabilities, how it works etc.)
+- I'm used to working with Sonarqube and appreciate that service
+
 
 
 # <a id="Top1"></a> What is [CodeQL][CodeQL]
@@ -26,7 +36,6 @@
   > The Static Analysis Results Interchange Format (SARIF) is an industry standard format for the output of static analysis tools.
 
 # <a id="Top2"></a> Differentiation to Sonarcloud/Sonarqube
-- static vs. semantic analysis
 - possibility to write and execute own queries
 - seamless integration in Github but also in VS-Code and  
 - executable on developer machine using [CLI][CodeQL CLI binaries] (Linux, Windows and OSX)
@@ -123,9 +132,9 @@ ___
   - large community participation ([compare pulse](https://github.com/github/codeql/pulse/monthly))
 - It is not a replacement for static code analysis but a complement to it
   - Important to know: some files are not (yet) scanned (e.g. lomboked classes)
-- Support of most important technology stack  
+- Supports relevant technology stack  
 - Enables to conduct scans for own queries
-  - Although it is a steep learning curve getting known to the query language itself
+  - Steep learning curve getting known to the query language itself
 
 
 [CodeQL]: https://securitylab.github.com/tools/codeql/
