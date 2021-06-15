@@ -88,6 +88,7 @@ ___
 
 
 # <a id="Top4"></a>How to use in own CI (e.g. Jenkins@Baloise)
+![Websequencediagramm](docs/_ci_pipeline/sequence_diagram.png)
 1. Using CLI in jenkins pipeline
    
     1.1. ```sh "wget https://github.com/github/codeql-cli-binaries/releases/download/v2.5.5/codeql-linux64.zip"```
@@ -96,11 +97,11 @@ ___
 
 2. Get queries by cloning CodeQL repo
   
-    ```sh "git clone https://github.com/github/codeql.git codeql-repo"```
+    ```sh "git clone --depth=1 https://github.com/github/codeql.git codeql-repo"```
 
 3. Get repo to be analyzed
   
-    ```git clone https://github.com/baloise-incubator/codeql2sonar-maven-plugin.git project2scan```
+    ```git clone --depth=1 https://github.com/baloise-incubator/codeql2sonar-maven-plugin.git project2scan```
   
 4. Create database to be scanned
     

@@ -1,0 +1,21 @@
+title CodeQL Analysis Process
+
+Pipeline->Codeql-CLI: download (wget)
+Pipeline->Codeql-CLI: unzip
+
+Pipeline->Codeql-Repo: git clone
+
+Pipeline->Repo2Scan: git clone
+
+
+Pipeline->Codeql-CLI: trigger analysis
+Codeql-CLI->Repo2Scan: build project
+Repo2Scan->Database: create db
+
+
+Codeql-CLI->Codeql-Repo: compile queries
+Codeql-CLI->Database: conduct analysis
+
+Codeql-CLI->Pipeline: result as SARIF file
+
+https://www.websequencediagrams.com/
